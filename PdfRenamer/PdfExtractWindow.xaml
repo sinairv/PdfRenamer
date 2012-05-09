@@ -1,0 +1,78 @@
+﻿<Window x:Class="PdfRenamer.PdfExtractWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" Height="408" Width="835">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="250"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        
+        <GridSplitter Grid.RowSpan="2" Width="3" Background="LightGray"></GridSplitter>
+        
+        <Grid Grid.Column="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" Margin="5,5" HorizontalAlignment="Stretch" VerticalAlignment="Center" Text="Folder:"></TextBlock>
+            <TextBox Grid.Column="1" Margin="5,5" Name="tbCurFolder" LostFocus="tbCurFolder_LostFocus" 
+                     VerticalAlignment="Center" HorizontalAlignment="Stretch" Height="24" Text="D:\Documents\Documents\Downloads"></TextBox>
+        </Grid>
+
+        <ListBox Name="lstFiles" Margin="3" Grid.Column="0" Grid.Row="1"
+                 ScrollViewer.CanContentScroll="True" ScrollViewer.VerticalScrollBarVisibility="Visible"
+                 ScrollViewer.HorizontalScrollBarVisibility="Visible"
+                     SelectionChanged="lstFiles_SelectionChanged" MouseDoubleClick="lstFiles_MouseDoubleClick" />
+        <WrapPanel Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2">
+            <TextBox Width="350" Height="25" Name="tbPdfPath" HorizontalAlignment="Left" Margin="10,5"></TextBox>
+            <Button  Width="80" Height="25" Click="BtnExtractClick" HorizontalAlignment="Left" Content="Extract"></Button>
+            <Button  Width="80" Height="25" Click="BtnCopyContentClick" HorizontalAlignment="Left" Content="Copy"></Button>
+        </WrapPanel>
+        <TabControl Grid.Row="1" Grid.Column="1" Margin="3" Name="tabCtrlMain">
+            <TabItem Header="Extracted Info">
+                <ScrollViewer HorizontalScrollBarVisibility="Auto">
+                    <TextBox Name="tbExtractedInfo" FontFamily="Consolas" FontSize="11" 
+                             Background="Transparent" IsReadOnly="True"/>
+                </ScrollViewer>
+            </TabItem>
+            <TabItem Header="Layout View">
+                <ScrollViewer HorizontalScrollBarVisibility="Auto">
+                    <TextBox Name="tbLayoutView" FontFamily="Consolas" FontSize="11" 
+                             Background="Transparent" IsReadOnly="True"/>
+                </ScrollViewer>
+            </TabItem>
+            <TabItem Header="Layout Text">
+                <ScrollViewer HorizontalScrollBarVisibility="Auto">
+                    <TextBox Name="tbLayoutContent" FontFamily="Consolas" FontSize="11" 
+                             Background="Transparent" IsReadOnly="True"/>
+                </ScrollViewer>
+            </TabItem>
+            <TabItem Header="HTML Meta">
+                <ScrollViewer HorizontalScrollBarVisibility="Auto">
+                    <TextBox Name="tbHtmlContent" FontFamily="Consolas" FontSize="11" 
+                             Background="Transparent" IsReadOnly="True"/>
+                </ScrollViewer>
+            </TabItem>
+            <TabItem Header="Browser">
+                <WebBrowser Name="browser"></WebBrowser>
+            </TabItem>
+            <TabItem Header="Raw Text">
+                <ScrollViewer HorizontalScrollBarVisibility="Auto">
+                    <TextBox Name="tbRawContent" FontFamily="Consolas" FontSize="11" 
+                             Background="Transparent" IsReadOnly="True"/>
+                </ScrollViewer>
+            </TabItem>
+            <TabItem Header="Pdf Info">
+                <ScrollViewer HorizontalScrollBarVisibility="Auto">
+                    <TextBox Name="tbPdfInfo" FontFamily="Consolas" FontSize="11" 
+                             Background="Transparent" IsReadOnly="True"/>
+                </ScrollViewer>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>

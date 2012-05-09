@@ -1,0 +1,90 @@
+﻿<Window x:Class="PdfRenamer.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:m="clr-namespace:PdfRenamer"
+        Title="PDF Renamer" Height="335" Width="682">
+    <Window.Resources>
+        <m:PdfItemCollection x:Key="PdfCollection" DirectoryPath="C:\" 
+                             ReplacementPattern="$(title) - $(author) - $(publisher) - $(year)" />
+
+        <DataTemplate x:Key="PdfItemTemplate">
+            <Border CornerRadius="3" BorderBrush="DarkBlue" BorderThickness="0.5" Padding="5,5,5,10" HorizontalAlignment="Stretch">
+                <Grid HorizontalAlignment="Stretch">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="auto"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"></ColumnDefinition>
+                        <ColumnDefinition Width="auto"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <CheckBox Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5" GotFocus="ControlGotFocused" IsChecked="{Binding Checked,Mode=TwoWay}"/>
+                    <TextBlock Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5,0">Original Name:</TextBlock>
+                    <TextBox Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" Margin="5,0" IsReadOnly="True" GotFocus="ControlGotFocused" Text="{Binding OriginalName,Mode=OneWay}"/>
+                    <Label x:Name="BtnView" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center"  Margin="5,3" Padding="0"  Foreground="Blue" Content="View" Cursor="Hand" MouseLeftButtonUp="ViewPdf"></Label>
+                    <TextBlock Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5,0">Suggested Name:</TextBlock>
+                    <TextBox Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Stretch"  Margin="5,0" GotFocus="ControlGotFocused" TextChanged="SugNameTextChanged" LostFocus="SugNameLostFocus" Text="{Binding SuggestedName,Mode=TwoWay}"/>
+                    <Label x:Name="BtnHide" Grid.Row="2" Grid.Column="0"  VerticalAlignment="Center" HorizontalAlignment="Center"  Margin="5,3" Padding="0"  Foreground="Blue" Content="Hide" Cursor="Hand" MouseLeftButtonUp="HideItem"></Label>
+                    <Label x:Name="BtnRename" Grid.Row="2" Grid.Column="1"  VerticalAlignment="Center" HorizontalAlignment="Center"  Margin="5,3" Padding="0"  Foreground="Blue" Content="Rename" Cursor="Hand" MouseLeftButtonUp="RenameItem"></Label>
+                    <TextBlock Grid.Row="2" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="DarkGreen" Margin="5,0" Text="{Binding Message}"/>
+                </Grid>
+            </Border>
+        </DataTemplate>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Grid.Column="0" Background="WhiteSmoke">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="auto"></ColumnDefinition>
+                <ColumnDefinition Width="auto"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" VerticalAlignment="Center"  Margin="3,0" Text="Dir: " />
+            <TextBox Grid.Column="1" VerticalAlignment="Center" Margin="3,0" Width="auto" Text="{Binding Source={StaticResource PdfCollection},Path=DirectoryPath,Mode=TwoWay}"></TextBox>
+            <Button  Grid.Column="2" VerticalAlignment="Center" Margin="3,0" Padding="5,0" Width="auto" Content="..." Click="BtnBrowseClicked"></Button>
+            <Button  Grid.Column="3" VerticalAlignment="Center" Margin="3,0" Width="auto" BorderBrush="{x:Null}" BorderThickness="0" Click="FolderContentRefresh">
+                <Image Source="/PdfRenamer;component/Images/Refresh.png" Stretch="None"></Image>
+            </Button>
+        </Grid>
+        <Grid Grid.Row="1" Background="WhiteSmoke">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="auto"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Column="0" VerticalAlignment="Center"  Margin="3,0" Text="Pattern: " />
+            <TextBox Grid.Column="1" VerticalAlignment="Center" Margin="3,0" Width="auto" Text="{Binding Source={StaticResource PdfCollection},Path=ReplacementPattern,Mode=TwoWay}"></TextBox>
+            <Label Grid.Column="4" VerticalAlignment="Center"  Margin="3" Padding="0"  Foreground="Blue" Content="Rename all Checked" Cursor="Hand" MouseLeftButtonUp="BtnApplyClicked"></Label>
+            <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.ColumnSpan="3">
+                <Label VerticalAlignment="Center"  Margin="7,3" Padding="0"  Foreground="Blue" Content="Check All" Cursor="Hand" MouseLeftButtonUp="BtnCheckAllClicked"></Label>
+                <Label VerticalAlignment="Center"  Margin="7,3" Padding="0"  Foreground="Blue" Content="Check None" Cursor="Hand" MouseLeftButtonUp="BtnCheckNoneClicked"></Label>
+                <Label VerticalAlignment="Center"  Margin="7,3" Padding="0"  Foreground="Blue" Content="Hide Equal Names" Cursor="Hand" MouseLeftButtonUp="BtnHideEqualNamesClicked"></Label>
+                <Label VerticalAlignment="Center"  Margin="7,3" Padding="0"  Foreground="Blue" Content="Hide Larger Orignial Names" Cursor="Hand" MouseLeftButtonUp="BtnHideLargerOrigNamesClicked"></Label>
+            </StackPanel>
+        </Grid>
+        <ListBox x:Name="lstPdfItems" Grid.Row="2" SelectionMode="Single"
+                 ItemsSource="{StaticResource ResourceKey=PdfCollection}" ItemTemplate="{StaticResource ResourceKey=PdfItemTemplate}" 
+                 HorizontalContentAlignment="Stretch">
+            
+        </ListBox>
+        <!--<DataGrid Grid.Row="2" Name="gridFileInfos" AutoGenerateColumns="True" PreviewKeyDown="DataGridKeyDown" MouseDoubleClick="DataGridDblClick" BeginningEdit="DataGridBeginEdit" CellEditEnding="DataGridEndingEdit">-->
+            <!--<DataGrid.Columns>
+                <DataGridTextColumn Header="FileName" MinWidth="200" IsReadOnly="True"  />
+                <DataGridTextColumn Header="New File Name" MinWidth="400" IsReadOnly="True" />
+                <DataGridCheckBoxColumn  CanUserResize="False" IsReadOnly="False"/>
+            </DataGrid.Columns>-->
+        <!--</DataGrid>-->
+            
+    </Grid>
+</Window>

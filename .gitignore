@@ -1,0 +1,9 @@
+*.suo
+*.user
+*.pdb
+*.vshost.exe
+*.vshost.exe.manifest
+*.vshost.exe.config
+obj/
+_ReSharper*/
+
