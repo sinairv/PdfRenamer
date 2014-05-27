@@ -7,7 +7,7 @@ For example after downloading a typical article from [JMLR](http://www.jmlr.org)
 
 However you are free to select the renaming style.
 
-![PdfRenamer snapshot](http://www.sinairv.com/pdfrenamer/images/PdfRenamer.png)
+![PdfRenamer snapshot](http://sinairv.github.io/pdfrenamer/images/PdfRenamer.png)
 
 ## Contact
 
