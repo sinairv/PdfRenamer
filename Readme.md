@@ -16,7 +16,7 @@ PdfRenamer is hosted on Github:
 
 Sina Iravanian
 
-Homepage: [sinairv.com](http://www.sinairv.com)
+Homepage: [sinairv.github.io](http://sinairv.github.io)
 
 Github: [github.com/sinairv](https://github.com/sinairv)
 
