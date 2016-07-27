@@ -9,15 +9,4 @@ However you are free to select the renaming style.
 
 ![PdfRenamer snapshot](http://sinairv.github.io/pdfrenamer/images/PdfRenamer.png)
 
-## Contact
-
-PdfRenamer is hosted on Github:  
-[https://github.com/sinairv/PdfRenamer](https://github.com/sinairv/PdfRenamer)
-
-Sina Iravanian
-
-Homepage: [sinairv.github.io](http://sinairv.github.io)
-
-Github: [github.com/sinairv](https://github.com/sinairv)
-
-Twitter: [@sinairv](http://www.twitter.com/sinairv)
+PdfRenamer is hosted on [GitHub](https://github.com/sinairv/PdfRenamer) and licensed under MIT
